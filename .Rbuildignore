@@ -1,0 +1,5 @@
+^.*\.Rproj$
+^.*[.]Rproj.*$
+^\.Rproj\.user$
+^data-raw$
+^.Rhistory$

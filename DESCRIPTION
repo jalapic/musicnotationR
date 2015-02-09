@@ -1,0 +1,22 @@
+Package: musicnotationR
+Title: Graphs temporal sequence of social interactions using music notation
+Version: 0.0.0.9000
+Description: Graphs the temporal sequence of social interactions between
+    individuals within a group according to the music notation visualization
+    method proposed by Ivan Chase (2006).
+Authors: James P. Curley <jc3181@columbia.edu>
+Maintainer: James P. Curley <jc3181@columbia.edu>
+Depends:
+    R (>= 3.1.0)
+License: >GPL-3
+LazyData: true
+Imports:
+    dplyr,
+    grid,
+    ggplot2
+Suggests:
+    knitr,
+    testthat
+URL: https://github.com/jalapic/musicnotationR
+BugReports: https://github.com/jalapic/musicnotationR
+VignetteBuilder: knitr
