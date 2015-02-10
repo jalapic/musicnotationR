@@ -29,6 +29,6 @@ data:
 - flies
 
 functions:
-- musicnot()
-- gg_colors()
-
+- musicnot() - generate music notation social interaction graph
+- gg_colors() - generates ggplot2 color palette
+- random_datetime() - generates random sequence of dates and times
