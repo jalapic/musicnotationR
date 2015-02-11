@@ -1,0 +1,216 @@
+---
+title: "musicnotationR tutorial"
+author: James P. Curley
+date: 10th Feb 2015
+output: html_document
+---
+
+email: jc3181 AT columbia DOT edu
+
+\  
+
+
+### musicnotationR 
+
+An R package for producing music notation social graphs
+
+This package is in its very early stages. Currently there is one main function, `musicnot()` which can be used to plot temporally organized social interation data according to the musical notation visualization method of Ivan Chase (2006) ["Music notation: a new method for visualizing social interaction in animals and humans", Frontiers Zoology 3: 18.](http://www.frontiersinzoology.com/content/3/1/18)
+
+\  
+
+### Installation
+
+The package can be installed directly from GitHub using the `install_github` function from the `devtools` library.
+
+\  
+
+```{r, warning=FALSE, message=FALSE, eval=FALSE}
+library(devtools)
+install_github('jalapic/musicnotationR', username = "jalapic")
+```
+
+```{r, warning=FALSE, message=FALSE}
+library(musicnotationR)
+```
+
+\  
+
+### Sample Data Sets
+
+There are currently two example datasets - 'dom' and 'flies'.  The format of these dataframes are as follows:
+
+```{r, warning=FALSE, message=FALSE}
+head(dom)
+head(flies)
+```
+
+\  
+
+As can be seen, each dataframe consists of four variables.  These are in order:
+
+- col1: a numeric unit of time at which each behavior occured
+- col2: the individual performing/directing the behavior
+- col3: the individual receiving the behavior
+- col4: the behavior
+
+\  
+
+
+**Important notes:** The first three columns have to be included in that order, however, they can be named anything. If behavior is included it has to be in the fourth column, but again can be named anything.  As many other variables/columns as desired can be included in the dataframe and they won't interfere with graphing.
+
+\  
+
+For instance, the following randomly generated data are also in an acceptable format:
+
+```{r, warning=FALSE, message=FALSE}
+  set.seed(84)
+  datetime <- random_datetime(100, st="2015/01/01", et="2015/01/31")
+  indivs <- matrix(replicate(100, sample(LETTERS[1:6], 2)), ncol=2, byrow=T)
+
+mydf <- data.frame(datetime, indivs)
+colnames(mydf) <- c("datetime", "indiv1", "indiv2")
+head(mydf)
+
+```
+
+\ 
+
+The datetime variable above is generated randomly between a start and end date using the `random_datetime` function built in to the musicnotationR package.
+
+\  
+
+### Plotting Music Notation Social Graphs
+
+Music notation social interaction graphs can be plotted using the `musicnot()` function, which contains many optional arguments for customizing the plot.  This function utilizes options built into the `ggplot2` and `grid` graphing packages, but by compiling them into one functions, makes manipulation easier.
+
+The basic plot of any data set is to use all the default arguments. For example:
+
+```{r, warning=FALSE, message=FALSE}
+musicnot(flies)
+```
+
+\  
+
+This plots on the x-axis the time (or date) at which each behavioral event occurred.  Each y-axis gridline represents an individual.  The default is to have gray gridlines.   Individuals are reprented by numbers (in this example 1-4 as there are four individuals).  In the default state, the number of each individual is determined by sorting alphanumerically.  The color scheme used for plotting is the default `ggplot2` color scheme.
+
+In the next series of plots, I will showcase several of the optional arguments.
+
+To add color to the horizontal gridlines:
+
+\  
+
+```{r, warning=FALSE, message=FALSE, fig.height=3}
+musicnot(flies, gridcolor=T)
+```
+
+\  
+
+To change the weight of the gridlines:
+
+\  
+
+```{r, warning=FALSE, message=FALSE, fig.height=3}
+musicnot(flies, gridcolor=T, gridlinesize = 0.5)
+```
+
+\  
+
+To change the y-axis tick labels to names/characters rather than numbers:
+
+\  
+
+```{r, warning=FALSE, message=FALSE, fig.height=3}
+musicnot(flies, gridcolor=T, gridlinesize = 0.5, labels="name")
+
+```
+
+\  
+
+To add a y-axis title:
+
+\  
+
+```{r, warning=FALSE, message=FALSE, fig.height=3}
+musicnot(flies, gridcolor=T, gridlinesize = 0.5, labels="name", ylabel="Individual")
+
+```
+
+\  
+
+To change the size of the data point:
+
+\  
+
+```{r, warning=FALSE, message=FALSE, fig.height=3}
+musicnot(flies, gridcolor=T, gridlinesize = 0.5, labels="name", ylabel="Individual", pointsize=2)
+```
+
+\  
+
+There are also a plethora of options for chaging the colors of individuals.  For instance...
+
+\  
+
+```{r, warning=FALSE, message=FALSE, fig.height=3}
+musicnot(flies, gridcolor=T, gridlinesize = 0.5, labels="name", colors="topo")
+musicnot(flies, gridcolor=T, gridlinesize = 0.5, labels="name", colors="rainbow")
+musicnot(flies, gridcolor=T, gridlinesize = 0.5, labels="name", colors=c("firebrick1", "dodgerblue", "seagreen", "darkgoldenrod1"))
+
+```
+
+\  
+
+If the fourth column of the dataframe contains information about which behavior occurred at each time point, then it is possible to plot these different behaviors by adjusting the linetype with the `behav="yes"` argument.  The linetypes will be selected based on the order in which each behavior occurs initially in the dataframe, but can be manually adjusted also. For example:
+
+\  
+
+```{r, warning=FALSE, message=FALSE, fig.height=3}
+musicnot(flies, gridcolor=T, gridlinesize = 0.5, labels="name", colors=c("firebrick1", "dodgerblue", "seagreen", "darkgoldenrod1"), behav="yes")
+
+musicnot(flies, gridcolor=T, gridlinesize = 0.5, labels="name", colors=c("firebrick1", "dodgerblue", "seagreen", "darkgoldenrod1"), behav=c("tease", "push", "poke"))
+
+```
+
+\  
+
+It's also possible to manually change the order in which individuals are plotted on the y-axis. The input should be a character vector containing the names of all individuals. 
+
+\  
+
+```{r, warning=FALSE, message=FALSE, fig.height=3}
+musicnot(flies, gridcolor=T, gridlinesize = 0.5, labels="name", colors=c("firebrick1", "dodgerblue", "seagreen", "darkgoldenrod1"), ranks=c("Vladimir", "Raymond", "George", "Ivan"))
+
+```
+\  
+
+Another example using the above randomly generated 'mydf' dataset:
+
+\  
+```{r, warning=FALSE, message=FALSE, fig.height=3}
+
+musicnot(mydf, gridcolor=T, gridlinesize = 0.25, labels="name", pointsize=1.5, ranks = c("E", "B", "A", "D", "F", "C"), colors="rainbow")
+```
+
+\  
+
+### Further customization of music notation plots
+
+\  
+
+Because the `musicnot()` function is essentially a wrapper for `ggplot2` code, each plot can be further altered by adding `ggplot2` code.  For instance,
+
+```{r, warning=FALSE, message=FALSE, fig.height=3}
+
+p <- musicnot(flies, gridcolor=T, gridlinesize = 0.5, labels="name", colors=c("black", "orange1", "limegreen", "dodgerblue1"))
+
+p + 
+  ggtitle("Social Interactions of Flies") +
+  xlab("Time in seconds") +
+  theme(panel.background = element_rect(fill = "mistyrose1"),
+        panel.grid.minor = element_blank() 
+        )
+
+```
+
+\  
+

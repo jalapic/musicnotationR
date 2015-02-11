@@ -23,8 +23,7 @@ in alphanumerical order.  Otherwise, a character vector indicating the rank
 of individuals (from highest to lowest) which will determine the plotted order
 of individuals.}
 
-\item{arrowsize}{The size of the arrowhead.
-df, ranks=NULL, arrowsize=0.3, arrowweight=0.75, pointsize=3, ylabel=NULL,}
+\item{arrowsize}{The size of the arrowhead.}
 
 \item{arrowweight}{The weight of the arrowhead.}
 

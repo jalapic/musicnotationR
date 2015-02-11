@@ -13,7 +13,6 @@
 #' of individuals (from highest to lowest) which will determine the plotted order
 #' of individuals.
 #' @param arrowsize The size of the arrowhead.
-#' df, ranks=NULL, arrowsize=0.3, arrowweight=0.75, pointsize=3, ylabel=NULL,
 #' @param arrowweight The weight of the arrowhead.
 #' @param pointsize The size of points.
 #' @param ylabel The y-axis title.
