@@ -37,3 +37,5 @@ functions:
 ### Demo
 
 A brief tutorial/demo can be found here -  http://rpubs.com/jalapic/musicnotationR
+
+A shinyapp based on the raw code can be found here -  https://jalapic.shinyapps.io/music/
